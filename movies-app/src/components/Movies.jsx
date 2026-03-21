@@ -4,6 +4,7 @@ import MovieCard from"./MovieCard"
 import axios from "axios";
 import Banner from "./Banner";
 function Movies(){
+    const [watchlist,setWatchList]=useState([]);
     const [movies,setMovies]=useState([]);
     const [pagNo,setPageNo]=useState(1);
     useEffect(()=>{
@@ -22,6 +23,16 @@ function Movies(){
             setPageNo(pagNo-1);
         }
     }
+    const addToWatchList=(movieObj)=>{
+        let updatedWatchList=[...watchlist,movieObj];
+        setWatchList(updatedWatchList);
+    }
+    const removeToWatchList=(movieObj)=>{
+        let updatedWatchList=watchlist.filter((movie)=>{
+            return movieObj.id!=movie.id;
+        });
+        setWatchList(updatedWatchList);
+    }
     return (
         <div>
         <Banner pageNumber={pagNo}/>
@@ -29,7 +40,7 @@ function Movies(){
         <h1>Trending Movies</h1>
         </div>
         <div className="flex justify-evenly flex-wrap gap-8">
-        {movies.map((movieObj)=><MovieCard movieObj={movieObj} />)}
+        {movies.map((movieObj)=><MovieCard movieObj={movieObj} addToWatchList={addToWatchList} watchlist={watchlist} removeToWatchList={removeToWatchList}/>)}
         </div>
         <Pagination pageNumber={pagNo} nextPageFn={handleNext} previousPageFn={handlePrevious}/>
         </div>
