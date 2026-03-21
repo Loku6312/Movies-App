@@ -4,7 +4,6 @@ function Home(){
     return (
         <div>
         <div>Home</div>
-        <Banner />
         <Movies />
         </div>
     )

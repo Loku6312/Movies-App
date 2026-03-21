@@ -1,29 +1,17 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import Pagination from "./Pagination"
 import MovieCard from"./MovieCard"
+import axios from "axios";
+import Banner from "./Banner";
 function Movies(){
-    const [movies,setMovies]=useState([
-        {
-            url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
-            title:"Movie 1"
-        },
-        {
-            url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
-            title:"Movie 2"
-        },
-        {
-            url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
-            title:"Movie 3"
-        },
-        {
-            url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
-            title:"Movie 4"
-        },{
-            url:"https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
-            title:"Movie 5"
-        }
-    ]);
+    const [movies,setMovies]=useState([]);
     const [pagNo,setPageNo]=useState(1);
+    useEffect(()=>{
+        axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=d88d09c8c262de5ae8ca08eeff6e4f80&language=en-US&page=${pagNo}`)
+        .then(function(res){
+            setMovies(res.data.results);
+        })
+    },[pagNo])
     const handleNext=()=>{
         setPageNo(pagNo+1);
     }
@@ -36,6 +24,7 @@ function Movies(){
     }
     return (
         <div>
+        <Banner pageNumber={pagNo}/>
         <div className="text-center text-2xl font-bold m-5">
         <h1>Trending Movies</h1>
         </div>
