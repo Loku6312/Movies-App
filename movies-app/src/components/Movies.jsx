@@ -12,7 +12,13 @@ function Movies(){
         .then(function(res){
             setMovies(res.data.results);
         })
-    },[pagNo])
+    },[pagNo]);
+    useEffect(()=>{
+        const moviesFromStorage=localStorage.getItem('movies');
+        if(moviesFromStorage){
+            setWatchList(JSON.parse(moviesFromStorage));
+        }
+    },[]);
     const handleNext=()=>{
         setPageNo(pagNo+1);
     }
@@ -26,12 +32,14 @@ function Movies(){
     const addToWatchList=(movieObj)=>{
         let updatedWatchList=[...watchlist,movieObj];
         setWatchList(updatedWatchList);
+        localStorage.setItem('movies',JSON.stringify(updatedWatchList));
     }
     const removeToWatchList=(movieObj)=>{
         let updatedWatchList=watchlist.filter((movie)=>{
             return movieObj.id!=movie.id;
         });
         setWatchList(updatedWatchList);
+        localStorage.setItem('movies',JSON.stringify(updatedWatchList));
     }
     return (
         <div>
