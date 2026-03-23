@@ -11,6 +11,30 @@ function WatchList(){
     const genres=(genre_id)=>{
         return genreids[genre_id];
     }
+    const handleAscendingRatings=()=>{
+        let sortedAscencending=watchlist.sort((movieObjA,movieObjB)=>{
+            return movieObjA.vote_average-movieObjB.vote_average;
+        });
+        setWatchList([...sortedAscencending]);
+    }
+    const handleDescendingRatings=()=>{
+        let sortedDescencending=watchlist.sort((movieObjA,movieObjB)=>{
+            return movieObjB.vote_average-movieObjA.vote_average;
+        });
+        setWatchList([...sortedDescencending]);
+    }
+    const handleAscendingPopularity=()=>{
+        let sortedAscencending=watchlist.sort((movieObjA,movieObjB)=>{
+            return movieObjA.popularity-movieObjB.popularity;
+        });
+        setWatchList([...sortedAscencending]);
+    }
+    const handleDescendingPopularity=()=>{
+        let sortedDescencending=watchlist.sort((movieObjA,movieObjB)=>{
+            return movieObjB.popularity-movieObjA.popularity;
+        });
+        setWatchList([...sortedDescencending]);
+    }
     return (
         <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5"> 
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
@@ -19,12 +43,20 @@ function WatchList(){
         <th className="px-6 py-4 font-medium text-gray-900">Name</th>
         <th>
         <div className="flex">
-        <div>Ratings</div>
+        <div>
+        <i className="fa-solid fa-arrow-up hover:cursor-pointer mx-1" onClick={handleAscendingRatings}></i>
+        {""}Ratings{""}
+        <i className="fa-solid fa-arrow-down hover:cursor-pointer mx-1" onClick={handleDescendingRatings}></i>
+        </div>
         </div>
         </th>
          <th>
         <div className="flex">
-        <div>Popularity</div>
+        <div>
+        <i className="fa-solid fa-arrow-up hover:cursor-pointer mx-1" onClick={handleAscendingPopularity}></i>
+        {""}Popularity{""}
+        <i className="fa-solid fa-arrow-down hover:cursor-pointer mx-1" onClick={handleDescendingPopularity}></i>
+        </div>
         </div>
         </th>
          <th>
