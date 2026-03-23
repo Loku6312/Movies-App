@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import genreids from "../constants/genreids";
 function WatchList(){
     const [watchlist,setWatchList]=useState([]);
+    const [search, setSearch]=useState("");
+    const handleSearch=(event)=>{
+        setSearch(event.target.value);
+    }
     useEffect(()=>{
         const moviesFromStorage=localStorage.getItem('movies');
         if(moviesFromStorage){
@@ -36,6 +40,16 @@ function WatchList(){
         setWatchList([...sortedDescencending]);
     }
     return (
+        <div>
+        <div className="flex justify-center my-10">
+        <input 
+            placeholder="Search Movies"
+            className="h-[3rem] w-[18rem] bg-gray-200 px-4 outline-none border 
+            border-gray-300" 
+            type="text"
+            onChange={handleSearch}
+            value={search}></input>
+        </div>
         <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5"> 
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500">
         <thead>
@@ -67,7 +81,11 @@ function WatchList(){
         </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
-        {watchlist.map((movie)=>(
+        {watchlist
+            .filter((movie)=>{
+                return movie.title.toLowerCase().includes(search.toLowerCase());
+            })
+            .map((movie)=>(
         <tr className="hover:bg-gray-50" key={movie.id}>
         <td className="flex items-center px-6 py-4 font-normal text-gray-900">
         <img className="h-[6rem] w-[10rem] object-fit object-cover" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt=""></img>
@@ -80,6 +98,7 @@ function WatchList(){
         ))}
         </tbody>
         </table>
+        </div>
         </div>
     )
 }
