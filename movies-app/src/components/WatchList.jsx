@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import genreids from "../constants/genreids";
+import {WatchListContext} from "../Context/WatchListContext";
 function WatchList(){
-    const [watchlist,setWatchList]=useState([]);
+    const {watchlist,setWatchList}=useContext(WatchListContext);
     const [search, setSearch]=useState("");
     const [genrelist,setGenreList]=useState(["All Genres","Thriller","Horror"]);
     const [currGenre,setCurrGenre]=useState("All Genres");
@@ -53,10 +54,10 @@ function WatchList(){
     }
     return (
         <div>
-        <div className="flex justify-center m-4">
+        <div className="flex justify-center flex-wrap m-4">
         {genrelist.map((genre)=>{
             const isActive=currGenre===genre;
-            const baseStyles="flex justify-center items-center h-[3rem] w-[9rem] rounded-xl text-white font-bold mx-4";
+            const baseStyles="flex justify-center items-center h-[3rem] w-[9rem] rounded-xl text-white font-bold mx-4 m-2";
             const bgcolor=isActive ? "bg-blue-400":"bg-gray-400/50";
             return <div className={`${baseStyles} ${bgcolor}`} onClick={()=>handleFilter(genre)}>{genre}</div>
         })}

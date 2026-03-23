@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import NavBar from "./components/NavBar";
 import WatchList from "./components/WatchList";
 import {Routes, Route} from "react-router-dom";
+import WatchListContextWrapper from "./Context/WatchListContext"
 
 
 
@@ -15,10 +16,12 @@ function App() {
   return (
     <>
     <NavBar />
+    <WatchListContextWrapper>
     <Routes>
      <Route path="/" element={<Home />}/>
      <Route path="/watchlist" element={<WatchList />}/>
     </Routes>
+    </WatchListContextWrapper>
     </>
 
   );
